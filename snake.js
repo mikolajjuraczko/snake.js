@@ -19,7 +19,7 @@ function drawGameBoard() {
     })
   );
 }
-
+createAnApple(gameState);
 drawGameBoard();
 let snakeDirection = "down";
 const snake = [
@@ -45,12 +45,17 @@ document.addEventListener("keypress", (e) => {
   }
 });
 
-const gameLoopId = setInterval(moveSnake, 500);
-function moveSnake() {
+const gameLoopId = setInterval(gameLoop, 100);
+function gameLoop() {
   if (snakeDirection === "up") {
     const newHeadPosition = [snake[0][0] - 1, snake[0][1]];
     if (checkNextField(newHeadPosition, gameState) === "collision") {
       clearInterval(gameLoopId);
+    } else if (checkNextField(newHeadPosition, gameState) === "apple") {
+      gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+      snake.unshift(newHeadPosition);
+      createAnApple(gameState);
+      drawGameBoard();
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
       snake.unshift(newHeadPosition);
@@ -62,6 +67,11 @@ function moveSnake() {
     const newHeadPosition = [snake[0][0] + 1, snake[0][1]];
     if (checkNextField(newHeadPosition, gameState) === "collision") {
       clearInterval(gameLoopId);
+    } else if (checkNextField(newHeadPosition, gameState) === "apple") {
+      gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+      snake.unshift(newHeadPosition);
+      createAnApple(gameState);
+      drawGameBoard();
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
       snake.unshift(newHeadPosition);
@@ -73,6 +83,11 @@ function moveSnake() {
     const newHeadPosition = [snake[0][0], snake[0][1] - 1];
     if (checkNextField(newHeadPosition, gameState) === "collision") {
       clearInterval(gameLoopId);
+    } else if (checkNextField(newHeadPosition, gameState) === "apple") {
+      gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+      snake.unshift(newHeadPosition);
+      createAnApple(gameState);
+      drawGameBoard();
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
       snake.unshift(newHeadPosition);
@@ -84,6 +99,11 @@ function moveSnake() {
     const newHeadPosition = [snake[0][0], snake[0][1] + 1];
     if (checkNextField(newHeadPosition, gameState) === "collision") {
       clearInterval(gameLoopId);
+    } else if (checkNextField(newHeadPosition, gameState) === "apple") {
+      gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+      snake.unshift(newHeadPosition);
+      createAnApple(gameState);
+      drawGameBoard();
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
       snake.unshift(newHeadPosition);
@@ -96,5 +116,21 @@ function moveSnake() {
 
 function checkNextField(newHeadPosition, gameState) {
   const nextField = gameState[newHeadPosition[0]][newHeadPosition[1]];
-  if (nextField === "w" || nextField === "g") return "collision";
+  if (nextField === "w" || nextField === "g") {
+    return "collision";
+  } else if (nextField === "a") {
+    return "apple";
+  }
+}
+
+function createAnApple(gameState) {
+  while (true) {
+    const y = Math.floor(Math.random() * 15) + 1;
+    const x = Math.floor(Math.random() * 20) + 1;
+    const randomField = gameState[y][x];
+    if (randomField === "o") {
+      gameState[y][x] = "a";
+      break;
+    }
+  }
 }
