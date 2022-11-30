@@ -1,4 +1,4 @@
-import gameState from "./modules/game-state.js";
+import gameState from "./components/game-state.js";
 
 const gameBoard = document.querySelectorAll(".field");
 
@@ -23,27 +23,41 @@ function drawGameBoard() {
 }
 
 drawGameBoard();
-let playerLocation = [6, 10];
+const snake = [
+  [6, 10],
+  [5, 10],
+  [4, 10],
+  [3, 10],
+];
+
 document.addEventListener("keypress", (e) => {
   if (e.key === "w") {
-    gameState[playerLocation[0]][playerLocation[1]] = "o";
-    playerLocation[0]--;
-    gameState[playerLocation[0]][playerLocation[1]] = "g";
+    const newHeadPosition = [snake[0][0] - 1, snake[0][1]];
+    gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+    snake.unshift(newHeadPosition);
+    const lastTailPostion = snake.pop();
+    gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
     drawGameBoard();
   } else if (e.key === "s") {
-    gameState[playerLocation[0]][playerLocation[1]] = "o";
-    playerLocation[0]++;
-    gameState[playerLocation[0]][playerLocation[1]] = "g";
+    const newHeadPosition = [snake[0][0] + 1, snake[0][1]];
+    gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+    snake.unshift(newHeadPosition);
+    const lastTailPostion = snake.pop();
+    gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
     drawGameBoard();
   } else if (e.key === "a") {
-    gameState[playerLocation[0]][playerLocation[1]] = "o";
-    playerLocation[1]--;
-    gameState[playerLocation[0]][playerLocation[1]] = "g";
+    const newHeadPosition = [snake[0][0], snake[0][1] - 1];
+    gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+    snake.unshift(newHeadPosition);
+    const lastTailPostion = snake.pop();
+    gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
     drawGameBoard();
   } else if (e.key === "d") {
-    gameState[playerLocation[0]][playerLocation[1]] = "o";
-    playerLocation[1]++;
-    gameState[playerLocation[0]][playerLocation[1]] = "g";
+    const newHeadPosition = [snake[0][0], snake[0][1] + 1];
+    gameState[newHeadPosition[0]][newHeadPosition[1]] = "g";
+    snake.unshift(newHeadPosition);
+    const lastTailPostion = snake.pop();
+    gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
     drawGameBoard();
   }
 });
