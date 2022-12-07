@@ -1,18 +1,13 @@
 import defaultGameState from "./modules/default-game-state.js";
 import * as snakeFunctions from "./modules/snake-functions.js";
 
+// Set the global variables and draw the inital game board
 const gameBoard = document.querySelectorAll(".field");
-const gameState = JSON.parse(JSON.stringify(defaultGameState));
-
-snakeFunctions.createAnApple(gameState);
+let gameState = defaultGameState;
+let snakeDirection;
+let snake;
+let gameLoopId;
 snakeFunctions.drawGameBoard(gameState, gameBoard);
-let snakeDirection = "down";
-const snake = [
-  [6, 10],
-  [5, 10],
-  [4, 10],
-  [3, 10],
-];
 
 document.addEventListener("keypress", (e) => {
   if (e.key === "w") {
@@ -28,11 +23,20 @@ document.addEventListener("keypress", (e) => {
     const newHeadX = snake[0][1] + 1;
     if (snake[1][1] !== newHeadX) snakeDirection = "right";
   } else if (e.key === "Enter") {
-    console.log("melm");
+    gameState = JSON.parse(JSON.stringify(defaultGameState));
+    snakeFunctions.createAnApple(gameState);
+    snakeDirection = "down";
+    snake = [
+      [6, 10],
+      [5, 10],
+      [4, 10],
+      [3, 10],
+    ];
+    clearInterval(gameLoopId);
+    gameLoopId = setInterval(gameLoop, 200);
   }
 });
 
-const gameLoopId = setInterval(gameLoop, 200);
 function gameLoop() {
   if (snakeDirection === "up") {
     const newHeadPosition = [snake[0][0] - 1, snake[0][1]];
@@ -116,5 +120,3 @@ function gameLoop() {
     }
   }
 }
-
-function snakeGame() {}
