@@ -1,27 +1,11 @@
-import defaultGameState from "./modules/game-state.js";
+import defaultGameState from "./modules/default-game-state.js";
 import * as snakeFunctions from "./modules/snake-functions.js";
+
 const gameBoard = document.querySelectorAll(".field");
 const gameState = JSON.parse(JSON.stringify(defaultGameState));
 
-function drawGameBoard() {
-  let f = 0;
-  gameState.forEach((row) =>
-    row.forEach((element) => {
-      if (element === "w") {
-        gameBoard[f].style.backgroundColor = "gray";
-      } else if (element === "s") {
-        gameBoard[f].style.backgroundColor = "green";
-      } else if (element === "a") {
-        gameBoard[f].style.backgroundColor = "red";
-      } else {
-        gameBoard[f].style.backgroundColor = "white";
-      }
-      f++;
-    })
-  );
-}
 snakeFunctions.createAnApple(gameState);
-drawGameBoard();
+snakeFunctions.drawGameBoard(gameState, gameBoard);
 let snakeDirection = "down";
 const snake = [
   [6, 10],
@@ -43,6 +27,8 @@ document.addEventListener("keypress", (e) => {
   } else if (e.key === "d") {
     const newHeadX = snake[0][1] + 1;
     if (snake[1][1] !== newHeadX) snakeDirection = "right";
+  } else if (e.key === "Enter") {
+    console.log("melm");
   }
 });
 
@@ -60,13 +46,13 @@ function gameLoop() {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       snakeFunctions.createAnApple(gameState);
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       const lastTailPostion = snake.pop();
       gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     }
   } else if (snakeDirection === "down") {
     const newHeadPosition = [snake[0][0] + 1, snake[0][1]];
@@ -80,13 +66,13 @@ function gameLoop() {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       snakeFunctions.createAnApple(gameState);
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       const lastTailPostion = snake.pop();
       gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     }
   } else if (snakeDirection === "left") {
     const newHeadPosition = [snake[0][0], snake[0][1] - 1];
@@ -100,13 +86,13 @@ function gameLoop() {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       snakeFunctions.createAnApple(gameState);
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       const lastTailPostion = snake.pop();
       gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     }
   } else if (snakeDirection === "right") {
     const newHeadPosition = [snake[0][0], snake[0][1] + 1];
@@ -120,13 +106,15 @@ function gameLoop() {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       snakeFunctions.createAnApple(gameState);
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     } else {
       gameState[newHeadPosition[0]][newHeadPosition[1]] = "s";
       snake.unshift(newHeadPosition);
       const lastTailPostion = snake.pop();
       gameState[lastTailPostion[0]][lastTailPostion[1]] = "o";
-      drawGameBoard();
+      snakeFunctions.drawGameBoard(gameState, gameBoard);
     }
   }
 }
+
+function snakeGame() {}
