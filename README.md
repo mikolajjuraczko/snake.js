@@ -1,3 +1,3 @@
 # snake.js
 
-A simple exercise in creating and displaying a game logic with JavaScript.
+A simple exercise in creating and displaying game logic with JavaScript.
