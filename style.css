@@ -3,25 +3,10 @@
 /* ========== */
 :root {
   --clr-neutral-100: #ffffff;
-  --clr-neutral-200: #eeeeee;
-  --clr-neutral-500: #979797;
-  --clr-neutral-700: #666666;
   --clr-neutral-900: #000000;
-  --clr-accent: #0088cc;
 
   font-size: 62.5%;
-  --fs-xl: 11.9rem;
-  --fs-900: 8.9rem;
-  --fs-800: 6.7rem;
-  --fs-700: 5rem;
-  --fs-600: 3.7rem;
-  --fs-500: 2.8rem;
   --fs-400: 2.1rem;
-  --fs-300: 1.6rem;
-  --fs-200: 1.2rem;
-  --fs-100: 0.9rem;
-  --fs-xs: 0.7rem;
-  --fs-xxs: 0.5rem;
 }
 
 *,
@@ -36,20 +21,21 @@ body {
   font-size: var(--fs-400);
   font-weight: 400;
   margin: 0;
-  color: var(--clr-neutral-900);
-  background-color: var(--clr-neutral-200);
+  color: var(--clr-neutral-100);
+  background-color: var(--clr-neutral-900);
 }
 
 /* ========== */
 /* Components */
 /* ========== */
-.container {
+.app-container {
   display: flex;
   flex-direction: column;
   margin-inline: auto;
   width: 880px;
 }
-.game-field {
+
+.game-board {
   display: grid;
   grid-template-columns: repeat(22, 1fr);
   width: 880px;
@@ -61,10 +47,23 @@ body {
   border: solid var(--clr-neutral-900) 1px;
 }
 
-.red {
-  background-color: red;
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.green {
-  background-color: green;
+header h2 {
+  font-size: var(--fs-400);
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+}
+
+.instructions p {
+  margin: 0px;
+  text-align: center;
 }

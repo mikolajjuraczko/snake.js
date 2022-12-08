@@ -1,7 +1,6 @@
 import defaultGameState from "./modules/default-game-state.js";
 import * as snakeFunctions from "./modules/snake-functions.js";
 
-// Set the global variables and draw the inital game board
 const gameBoard = document.querySelectorAll(".field");
 let gameState = defaultGameState;
 let snakeDirection;
